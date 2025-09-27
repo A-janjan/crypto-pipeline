@@ -1,5 +1,4 @@
 
-ChatGPT chat: https://chatgpt.com/share/68d7e838-c9b0-8005-b69d-c376d13f2e31
 
 # 1 — Architecture (high level)
 
