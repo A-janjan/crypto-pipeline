@@ -1,0 +1,50 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports: ["2181:2181"]
+  
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on: ["zookeeper"]
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports: ["9092:9092"]
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: crypto
+    ports: ["5433:5432"]
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  mongo:
+    image: mongo:6
+    ports: ["27017:27017"]
+
+  elasticsearch:
+    image: elasticsearch:8.9.0
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports: ["9200:9200"]
+
+  kibana:
+    image: kibana:8.9.0
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    ports: ["5601:5601"]
+    depends_on: ["elasticsearch"]
+
+volumes:
+  pgdata:
+  mongodb:
