@@ -1,2 +1,5 @@
 my_notes/
 env/
+data/
+
+postgresql.jar
